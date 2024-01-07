@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+    <header class="container">
+       <a href="./acceuil.html"> <img class="logo" src="./logo.jpg" alt=""></a>
+        <div class="shopping">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="qantity">0</span>
+        </div>
+    </header>
+
+    <div class="detail">
+        <div class="image">
+           <img src="./alldet.png" alt="">
+        </div>
+        <div class="content">
+           <div class="name">FLEURICOT</div>
+           <div class="price">300DH</div>
+           <div class="buttons">
+            <button><a href="./valider.html">Demande</a></button>
+               <button class="addCart">
+                   <i class="fa-solid fa-cart-shopping"></i>
+                   Add Cart
+               </button>
+           </div>
+           <div class="description">
+               <p>
+               Cardigan court tricoté à fleurs pour femmes, Crochet fait à la main, col en V, manches lanternes, épais, ample, vêtements d'extérieur, nouveau
+               Pull en tricot personnalisé avec motif de nuage et motif de fleurs.
+               Convient pour le printemps, l'automne, l'hiver et l'été froid, il peut être adapté à toutes les situations quotidiennes et peut être assorti à différents styles.
+               très approprié pour être associé à un jean ， pour votre port quotidien, épaisseur modérée, douceur modérée, bon étirement.
+               Une maille basique indispensable, légère et extensible, agréable à .
+               Ce matériau vous procure une sensation de confort charmante, à la mode et confortable.
+
+               
+           </p>
+           </div>
+        </div>
+   </div> 
+    <div class="container">
+        <div class="list"></div>
+    
+    </div>
+        <div class="cart">
+            <h1>Carte</h1>
+            <ul class="listCart"></ul>
+            <div class="checkout">
+            <div class="total">0</div>
+            <div class="closeShopping">close</div>
+       
+        </div>
+    </div>
+    <button class="deman"><a href="./valider.html">Demande</a></button>
+    
+    <script>
+        
+       let openshoppping =document.querySelector('.shopping') ;
+
+       let closeshoping =document.querySelector('.closeShopping');
+
+       let list =document.querySelector('.list');
+
+       let listCart =document.querySelector('.listCart');
+
+       let body =document.querySelector('body')
+
+       let total =document.querySelector('.total');
+
+       let quantity =document.querySelector('.qantity');
+
+       openshoppping.addEventListener('click',()=>{
+
+        body.classList.add('active');
+
+       })
+ 
+       closeshoping.addEventListener('click',()=>{
+
+       body.classList.remove('active');
+
+       })
+       
+       let prodiuts=[
+        {
+        id:1,
+        name:'Fleuricot pour bébé ',
+        image:'./chil1.png',
+        price:250,
+       },
+       {
+        id:2,
+        name:'Fleuricot pour bébé',
+        image:'./chil2.png',
+        price:250,
+       },
+       {
+        id:3,
+        name:'Fleuricot pour bébé',
+        image:'./chil3.png',
+        price:250,
+       },
+       {
+        id:4,
+        name:'Fleuricot pour bébé',
+        image:'./chil4.png',
+        price:250,
+       },
+       {
+        id:5,
+        name:'Fleuricot pour bébé',
+        image:'./chil5.png',
+        price:250,
+       },
+       {
+        id:10,
+        name:'Fleuricot pour bébé',
+        image:'./chi1.png',
+        price:250,
+       },
+       {
+        id:6,
+        name:'Fleuricot pour bébé',
+        image:'./chil6.png',
+        price:250,
+       },
+       {
+        id:7,
+        name:'Fleuricot pour bébé',
+        image:'./chil7.png',
+        price:250,
+       },
+       {
+        id:8,
+        name:'Fleuricot pour bébé',
+        image:'./chil8.png',
+        price:250,
+       },
+     
+     
+    ];
+       
+      let listCarts =[]; 
+
+    
+
+          prodiuts.forEach((value,key)=>{
+
+            let newDiv = document.createElement('div');
+
+            newDiv.classList.add('item')
+            
+            newDiv.innerHTML =
+             `
+             <img src="${value.image}" alt="">
+              <div class="title">${value.name}</div>
+              <div class="price">${value.price.toLocaleString()}dh</div>
+              <button onclick="addToCart(${key})">Ajouter</button>
+            
+             `
+            list.appendChild(newDiv)
+          })
+        
+          function addToCart(key){
+
+            let quantity =document.querySelector('.qantity');
+             
+            if(listCarts[key] == null){
+
+                listCarts[key]=prodiuts[key];
+
+                listCarts[key].quantity =1;
+
+            }
+
+            reloadCarts()
+
+          }
+
+           function reloadCarts(){
+
+            let quantity =document.querySelector('.qantity');
+
+             listCart.innerHTML='';
+
+             let count = 0;
+
+             let totalPrice =0;
+
+             listCarts.forEach((value,key)=>{
+
+                totalPrice = totalPrice + value.price;
+
+                count = count + value.quantity;
+
+                if(value != null){
+
+                let newDiv = document.createElement('li');
+
+                newDiv.innerHTML=
+
+             `
+             <div><img src="${value.image}" alt=""></div>
+             <div>${value.name}</div>
+             <div>${value.price.toLocaleString()}</div>
+             
+             <div>
+             <button onclick="changeQuantity(${key},${value.quantity -1})">-</button>
+             <div class="count">${value.quantity}dh</div>
+             <button onclick="changeQuantity(${key},${value.quantity+1})">+</button>
+             </div>
+
+             `;
+             listCart.appendChild(newDiv);
+
+            }
+
+            })
+
+            total.innerText = totalPrice.toLocaleString();
+
+            quantity.innerText = count;
+
+           }
+
+           function changeQuantity(key,quantity){
+
+    
+
+            if(quantity==0){
+
+                delete listCarts[key];
+
+            }else{
+                
+                listCarts[key].quantity = quantity;
+
+                listCarts[key].price = quantity*prodiuts[key].price;
+
+            }
+            reloadCarts();
+           }
+       //https://sanalamghari.github.io/E-commerce-website/amazon.html
+       //https://sanalamghari.github.io/marque-Fleuricot/acceuil.html
+    
+    </script>
+    
+</body>
+</html>
